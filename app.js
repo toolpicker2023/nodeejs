@@ -2,7 +2,8 @@ const express = require("express")
 const app = express()
 const port = 3000;
 const path = require('path');
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const { render } = require("ejs");
 
 const products = [
     {"id": 1, "description":"Cone", "flavour":"vanilla", "cost": 4.15},
@@ -16,7 +17,7 @@ const users = [
     {
         "username": "user1",
         "email": "user1@aueb.gr",
-        "password": "123456"
+        "password": "$2b$10$YG1ocTbbKeL/Bk2MAD8FVetZUtp9Z5vHRz/UEyv4abiHL.uH9lEcG"
     },
     {
         "username": "user2",
@@ -50,7 +51,8 @@ app.get("/", (req, res)=> {
 app.get("/login", (req,res)=> {
     console.log("Login")
     // res.sendFile(path.join(__dirname, 'views', 'login.html'));
-    res.render("login", {})
+    let message = ""
+    res.render("login", {message})
 })
 
 app.get("/register", (req, res)=> {
@@ -59,20 +61,54 @@ app.get("/register", (req, res)=> {
 
 })
 
-app.post("/user", (req, res) => {
+// app.post("/user", (req, res) => {
+//     console.log("User Post")
+//     let data = req.body
+//     let username = data.username
+//     let password = data.password
+//     console.log(username, password)
+
+
+
+//     res.render("user", {
+//         username: username,
+//         email: email
+//     })
+
+// })
+
+
+app.post("/user", async(req, res) => {
     console.log("User Post")
     let data = req.body
-    let username = data.username
-    let password = data.password
-    console.log(username, password)
+    let username = data.username.trim("")
+    let password = data.password.trim("")
+    if (users.some(user=> user.username === username)) {
+        console.log("username was found")
+        const user = users.find(user => user.username === username)
+        console.log(user)
+        if (await bcrypt.compare(password, user.password)) {
+            res.render("user", {username})
+        } else {
+            console.log("Wrong password for username", username)
+        }
+    } else {
+        console.log("User not found")
+        res.sendFile(path.join(__dirname, 'views', 'login.html'));
+    }
+
     
 
-    res.render("user", {
-        username: username,
-        email: email
-    })
+    // res.render("user", {
+    //     username: username,
+    //     password: password
+    // })
 
 })
+
+
+
+
 
 app.get("/users", (req, res)=> {
     console.log("UsersPage")
