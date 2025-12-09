@@ -7,6 +7,9 @@ const { render } = require("ejs");
 const fs = require("fs")
 const FILE = "users.json"
 
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+
 
 const products = [
     {"id": 1, "description":"Cone", "flavour":"vanilla", "cost": 4.15},
@@ -58,8 +61,13 @@ function loadUsers() {
 }
 
 
-
-
+const logger = (req, res, next) => {
+    let url = req.url
+    console.log("Logger:", req.body)
+    let time = new Date()
+    console.log(`Received requests for ` + url + ` at ` + time)
+    next()
+}
 
 
 
@@ -67,14 +75,13 @@ app.set("view engine", "ejs")
 
 app.use(express.urlencoded({extended:true}))
 
-
-app.get("/", (req, res)=> {
+app.get("/", logger, (req, res)=> {
     console.log("Homepage")
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 
 })
 
-app.get("/login", (req,res)=> {
+app.get("/login", logger, (req,res)=> {
     console.log("Login")
     // res.sendFile(path.join(__dirname, 'views', 'login.html'));
     let message = ""
@@ -125,16 +132,17 @@ app.post("/user", async(req, res) => {
 
     
 
-    // res.render("user", {
-    //     username: username,
-    //     password: password
-    // })
-
 })
 
 
 
+app.get("/ip", (req, res) => {
+    const ip =
+    req.headers['x-forwarded-for']?.split(',').shift() || 
+    req.socket.remoteAddress;
+    console.log(`Your ip: ${ip}`)
 
+})
 
 app.get("/users", (req, res)=> {
     console.log("UsersPage")
@@ -144,7 +152,8 @@ app.get("/users", (req, res)=> {
 
 app.get("/products",(req, res)=> {
     console.log("products page")
-    res.render("createProduct", {products})
+    // res.status(200).json({status: true, data: "products json"})
+    res.status(200).render("createProduct", {products})
 })
 
 app.post("/createUser", async (req, res)=> {
