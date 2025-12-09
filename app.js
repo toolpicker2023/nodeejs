@@ -4,6 +4,9 @@ const port = process.env.PORT || 3000;
 const path = require('path');
 const bcrypt = require("bcrypt");
 const { render } = require("ejs");
+const fs = require("fs")
+const FILE = "users.json"
+
 
 const products = [
     {"id": 1, "description":"Cone", "flavour":"vanilla", "cost": 4.15},
@@ -13,29 +16,52 @@ const products = [
     {"id": 5, "description":"bowl", "flavour":"Vanilla", "cost": 4.12},
 ]
 
-const users = [
-    {
-        "username": "user1",
-        "email": "user1@aueb.gr",
-        "password": "$2b$10$YG1ocTbbKeL/Bk2MAD8FVetZUtp9Z5vHRz/UEyv4abiHL.uH9lEcG"
-    },
-    {
-        "username": "user2",
-        "email": "user2@email.com",
-        "password": "123456"
-    },
-    {
-        "username": "user3",
-        "email": "user3@aueb.gr",
-        "password": "123456"
-    }
-]
+let users = loadUsers();
+
+// const users = [
+//     {
+//         "username": "user1",
+//         "email": "user1@aueb.gr",
+//         "password": "$2b$10$YG1ocTbbKeL/Bk2MAD8FVetZUtp9Z5vHRz/UEyv4abiHL.uH9lEcG"
+//     },
+//     {
+//         "username": "user2",
+//         "email": "user2@email.com",
+//         "password": "123456"
+//     },
+//     {
+//         "username": "user3",
+//         "email": "user3@aueb.gr",
+//         "password": "123456"
+//     }
+// ]
 
 // const hashPassword = async (password) => {
 //   const saltRounds = 12; // the higher the number, the slower but more secure
 //   const hashedPassword = await bcrypt.hash(password, saltRounds);
 //   return hashedPassword;
 // };
+
+function saveUsers(users) {
+    fs.writeFileSync("users.json", JSON.stringify(users, null, 2), "utf8")
+}
+
+
+function loadUsers() {
+  try {
+    const data = fs.readFileSync("users.json", "utf8");
+    return JSON.parse(data);
+  } catch (err) {
+    // File doesn’t exist first time → return empty array
+    return [];
+  }
+}
+
+
+
+
+
+
 
 app.set("view engine", "ejs")
 
@@ -143,6 +169,7 @@ app.post("/createUser", async (req, res)=> {
                 "email": email
             }
             users.push(account)
+            saveUsers(users)
             console.log("user created login")
             res.sendFile(path.join(__dirname, 'views', 'login.html'));
         }
