@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Registration Form</title>
+</head>
+<body class="bg-gray-400">
+    <div class="text-center">
+        <h1 class="pt-14 pb-4 font-bold text-4xl">Registration</h1>
+        <div>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/">Home</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/users">Users</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/products">Products</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/login">Login</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/register">Register</a></span>
+        </div>
+    </div>
+    <div class="text-center">
+        <h1 class="text-4xl text-amber-800 py-14 font-bold italic pl-4 underline underline-offset-8">Register</h1>
+    <form action="/createUser" method="post">
+        <div class="my-4">
+            <span class="font-bold italic text-xl">Username:</span>
+            <span class="ml-2">
+                <input
+                class="rounded"
+                type="text" name="username" required pattern="^\S+$" title="No spaces allowed"></span>
+        </div>
+        <div>
+            <span class="font-bold italic text-xl">Password:</span> <span class="ml-2"><input
+                class="rounded required" type="password" name="password" pattern="^\S+$" title="No spaces allowed" required></span>
+        </div>
+        <div class="my-4">
+            <span class="font-bold italic text-xl ml-4">Email:</span>
+            <span class="ml-8">
+                <input
+                class="rounded"
+                type="email" name="email" required></span>
+        </div>
+
+        <div class="py-4 pl-16">
+            <input 
+            class="border border-emerald-800 rounded bg-emerald-700 w-14 hover:bg-amber-900"
+            type="submit" value="Submit">
+        </div>
+    </form>
+
+    <div class="py-4">
+        <span>Already a user?</span>
+        <span class="underline underline-offset-4 ml-4 text-red-800"><a href="/login">Login here</a></span>
+    </div>
+
+
+
+
+    </div>
+        
+
+    
+    
+</body>
+</html>

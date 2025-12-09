@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>UserPage</title>
+</head>
+<body class="bg-amber-200">
+
+    <div class="text-center">
+        <h1 class="pt-14 pb-4 font-bold text-4xl">User Page!</h1>
+        <div>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/">Home</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/users">Users</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/products">Products</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/login">Login</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/register">Register</a></span>
+        </div>
+    </div>
+
+
+
+    <h1>User Details</h1>
+    <div>
+        <p>Username: <%= username %></p>
+        <p>Email: <%= email %></p>
+    </div>
+    
+</body>
+</html>

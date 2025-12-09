@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Products</title>
+</head>
+<body class="bg-amber-200">
+
+    <div class="text-center">
+        <h1 class="pt-14 pb-4 font-bold text-4xl">This is the Products Page!</h1>
+        <div>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/">Home</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/users">Users</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/products">Products</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/login">Login</a></span>
+        <span class="underline underline-offset-4 ml-4 hover:text-red-800"><a href="/register">Register</a></span>
+        </div>
+        <div>
+            <h1 class="py-10 text-xl">Products data:</h1>
+        </div>
+        <div>
+            <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Flavour</th>
+                <th>    Cost $</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% products.forEach(product => { %>
+                <tr>
+                    <td><%= product.description %></td>
+                    <td><%= product.flavour %></td>
+                    <td><%= product.cost %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+        </div>
+    </div>
+    <div>
+        <h1 class="text-xl text-amber-800 pt-8 font-bold italic pl-4">Create new Product</h1>
+    <form action="/user" method="post">
+        <div class="my-4">
+            <span class="font-bold italic text-xl">Description:</span>
+            <span class="ml-2">
+                <input
+                class="rounded"
+                type="text" name="description"></span>
+        </div>
+        <div class="my-4">
+            <span class="font-bold italic text-xl">Flavour:</span> <span class="ml-2"><input
+                class="rounded required" type="text" name="flavour"></span>
+        </div>
+        <div>
+            <span class="font-bold italic text-xl">Cost:</span> <span class="ml-2"><input
+                class="rounded required" type="number" name="cost"></span>
+        </div>
+        <div class="py-4 pl-16">
+            <input 
+            class="border border-emerald-800 rounded bg-emerald-700 w-14 hover:bg-amber-900"
+            type="submit" value="Create">
+        </div>
+    </form>
+    
+</body>
+</html>
